@@ -1,3 +1,4 @@
+// https://www.acmicpc.net/problem/2839 백준 설탕 배달
 // 표준 입출력 구현
 
 let input = require('fs').readFileSync('./dev/stdin').toString().trim().split('\n');
