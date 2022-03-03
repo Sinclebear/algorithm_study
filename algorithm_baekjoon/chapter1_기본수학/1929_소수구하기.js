@@ -1,0 +1,1 @@
+// https://www.acmicpc.net/problem/1929 백준 소수 구하기
