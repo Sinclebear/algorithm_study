@@ -1,4 +1,7 @@
 // https://www.acmicpc.net/problem/1110 백준 더하기 싸이클
+
+/************ 확실히 이해했음 *************** */
+
 // 표준 입출력 구현
 let input = require("fs")
   .readFileSync("./dev/stdin")
