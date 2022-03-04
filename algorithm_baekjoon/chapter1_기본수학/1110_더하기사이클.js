@@ -46,7 +46,7 @@ let input = require("fs")
 // input = ['26']
 let result = parseInt(input[0]); // stdin 파일 내의 숫자를, 그대로 숫자로 변환.
 let cycle = 0;
-let init_num = result; // 비교대상은 new_input으로 그대로 두고, result를 별도로 선언.
+let init_num = result; // 비교대상은 result로 그대로 두고, 최초 숫자 init_num를 별도로 선언.
 
 while (true) {
   let sum = Math.floor(result / 10) + (result % 10); // 십의자리 숫자와 일의자리 숫자 더한 값 sum.
