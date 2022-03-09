@@ -1,4 +1,4 @@
-// 표준 입출력 구현
+//표준 입출력 구현
 // let input = require('fs').readFileSync('./dev/stdin').toString().trim().split('\n');
 // let [b,c] = input[0].split(' ').map(x=>+x);
 
@@ -6,63 +6,163 @@ let input = require("fs")
   .readFileSync("./dev/stdin")
   .toString()
   .trim()
-  .split("\n")
+  .split("\r\n");
 
+const [n, ...commands] = input;
 
-// // input = ['26']
-// // 기존 코드 / 정수 <-> 문자열을 왔다갔다 하기 너무나도 귀찮다..
-// // 문자열을 쓰려고 했던 이유는, 십의 자리 숫자 / 일의 자리 숫자를 전부 변수로 따로 할당하여 사용하려고 했기때문.
-// // -> 주어진 수를 10으로 나눈 후, Math.floor (소숫점 버림) 함수를 쓰면 십의자리 수만 건져낼 수 있음.
-// let new_input = new Array()
-
-// if (parseInt(input) < 10){
-//   new_input.push('0', input[0])
-//   // console.log(new_input); ["0", "1"]
-// } else {
-//   new_input = input[0].split("");
-//   // console.log(new_input); // ["2", "6"]
-// }
-// let cycle = 0;
-// let tens = parseInt(new_input[0]); // 십의 자리
-// let units = parseInt(new_input[1]); // 일의 자리
-// let result = 0;
-// let string_result = '';
-// let result_array = new Array();
-
-// // 미완성
-// while(true){
-//   cycle++;
-//   result = tens + units;
-//   string_result = result.toString();
-//   result_array.push(string_result);
-//   if (result === parseInt(input)){
-//     break;
-//   }
-//   new_input = result.toString();
-// }
-// console.log(cycle);
-
-
-//---------- 제출 코드 ----------
-  // input = ['26']
-let result = parseInt(input[0]); // stdin 파일 내의 숫자를, 그대로 숫자로 변환.
-let cycle = 0;
-let init_num = result; // 비교대상은 new_input으로 그대로 두고, result를 별도로 선언.
-
-while(true){
-  let sum = Math.floor(result / 10) + (result % 10); // 십의자리 숫자와 일의자리 숫자 더한 값 sum. 
-  
-  // result = 26인 경우, 
-  // * Math.floor(5.5) = 5 (소수점 버림 연산)
-  //                              2  +  6
-  // (26 / 10 = 2.6 (십의자리 숫자)) + (26 % 10 = 6(일의자리 숫자)) ... = 8
-
-  // result에서 더하기 전 일의 자리는 십의 자리 위치로, sum에서 더한 후의 일의 자리를 일의 자리 위치로 더하기.
-  result = (result % 10) * 10 + (sum % 10);
-  cycle++;
-  if (init_num === result){
-    break;
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
   }
-    
 }
-console.log(cycle)
+
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  push(item) {
+    const node = new Node(item); // item 항목으로 새 노드 생성.
+    if (!this.head) { // head가 없는 경우 = 큐가 비어있을 경우.
+      this.head = node;
+      this.head.next = this.tail; // 꼬리의 reference 주소 저장
+    } else { // 꼬리의 다음 노드로 저장.
+      this.tail.next = node;
+    }
+
+    this.tail = node;
+    this.size += 1;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  pop() {
+    if (this.size > 2) {
+      const item = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.size -= 1;
+      return item;
+    } else if (this.size === 2) {
+      const item = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.tail = newHead;
+      this.size -= 1;
+      return item;
+    } else if (this.size === 1) {
+      const item = this.head.item;
+      this.head = null;
+      this.tail = null;
+      this.size -= 1;
+      return item;
+    } else {
+      return -1;
+    }
+  }
+
+  empty() {
+    // 큐가 비어있지 않으면 0, 비어있으면 1
+    return this.size ? 0 : 1;
+  }
+
+  front() {
+    // 큐의 가장 앞에 있는 정수 출력, 또는 정수가 없는 경우 -1 출력
+    return this.head ? this.head.item : -1;
+  }
+
+  back() {
+    // 큐의 가장 뒤에 있는 정수 출력, 또는 정수가 없는 경우 -1 출력
+    return this.tail ? this.tail.item : -1;
+  }
+}
+
+// 문제 풀이
+function solution(n, commands) {
+  let answer = "";
+  const queue = new Queue();
+
+  for (let i = 0; i < n; i += 1) {
+    const command = commands[i].split(" ")[0];
+
+    switch (command) {
+      case "push":
+        const pushItem = commands[i].split(" ")[1];
+        queue.push(pushItem);
+        break;
+      case "pop":
+        answer += queue.pop() + " ";
+        break;
+      case "front":
+        answer += queue.front() + " ";
+        break;
+      case "back":
+        answer += queue.back() + " ";
+        break;
+      case "empty":
+        answer += queue.empty() + " ";
+        break;
+      case "size":
+        answer += queue.getSize() + " ";
+        break;
+      default:
+        break;
+    }
+  }
+
+  return answer.split(" ").join("\n");
+}
+
+// 제출
+const answer = solution(n, commands);
+console.log(answer);
+
+/***********************************************************************/
+// //동작은 잘 되지만, 시간 초과 코드.
+
+// let command_num = parseInt(input[0]);
+// let result = new Array();
+
+// for (let i = 1; i <= command_num; i++) {
+//   switch (input[i]) {
+//     case "front":
+//       if (result.length > 0) {
+//         console.log(result[0]);
+//       } else {
+//         console.log(-1);
+//       }
+//       break;
+//     case "back":
+//       if (result.length > 0) {
+//         console.log(result[result.length - 1]);
+//       } else {
+//         console.log(-1);
+//       }
+//       break;
+//     case "size":
+//       console.log(result.length);
+//       break;
+//     case "empty":
+//       if (result.length > 0) {
+//         console.log(0);
+//       } else {
+//         console.log(1);
+//       }
+//       break;
+//     case "pop":
+//       if (result.length > 0) {
+//         console.log(result.shift());
+//       } else {
+//         console.log(-1);
+//       }
+//       break;
+//     default:
+//       // push 계열
+//       result.push(input[i].split(" ")[1]);
+//   }
+// }
