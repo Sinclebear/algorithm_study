@@ -18,7 +18,7 @@ let [n, k] = input[0].split(" ").map((x) => +x);
 // ------------------------- = ----------------------  (단, 0 <= k <= n)
 //             k!                 (n-k)! * k!
 
-// // 풀이1. 팩토리얼을 직접 구현하여 풀이. Python 에서는 Math.factorial 함수가 있다.
+// 풀이1. 팩토리얼을 직접 구현하여 풀이. Python 에서는 Math.factorial 함수가 있다.
 // function factorial(number) {
 //   result = 1;
 //   for (let i = 2; i < number + 1; i++) {
@@ -39,23 +39,23 @@ let [n, k] = input[0].split(" ").map((x) => +x);
 // // n-1개의 원소 중 r개를 선택하는 경우의 수 + n-1개의 원소 중 r-1개를 선택하는 경우의 수
 // // === 하나의 원소를 선택하는 경우의 수     + 하나의 원소를 선택하지 않는 경우의 수
 
-function bino_coef(n, k) {
-  // k가 n보다 큰 경우는 갯수가 0이다.
-  if (k > n) {
-    return 0;
-  }
+// function bino_coef(n, k) {
+//   // k가 n보다 큰 경우는 갯수가 0이다.
+//   if (k > n) {
+//     return 0;
+//   }
 
-  // n개에서 0개를 선택하는 경우의 수와 n개에서 r개를 선택하는 경우의 수는 1이다.
-  // 예) 3C3 = 3C0 = 1
-  // 조합을 계속해서 나눠서, 1이 되는 값의 덧셈으로 나누는것
-  if (k === 0 || k === n) return 1;
+//   // n개에서 0개를 선택하는 경우의 수와 n개에서 r개를 선택하는 경우의 수는 1이다.
+//   // 예) 3C3 = 3C0 = 1
+//   // 조합을 계속해서 나눠서, 1이 되는 값의 덧셈으로 나누는것
+//   if (k === 0 || k === n) return 1;
 
-  let bino_coef_result = bino_coef(n - 1, k) + bino_coef(n - 1, k - 1);
-  // nCk = (n-1)Ck + (n-1)C(k-1)
-  return bino_coef_result;
-}
+//   let bino_coef_result = bino_coef(n - 1, k) + bino_coef(n - 1, k - 1);
+//   // nCk = (n-1)Ck + (n-1)C(k-1)
+//   return bino_coef_result;
+// }
 
-console.log(bino_coef(n, k));
+// console.log(bino_coef(n, k));
 
 //                            5C2
 //                4C2                +                4C1
