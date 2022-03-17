@@ -9,6 +9,13 @@ let input = require("fs")
   .trim()
   .split("\n");
 
+// 어떤 자연수 M의 분해합이란, M과 M을 이루는 각 자릿수의 합을 의미 // (N->M)
+// 어떤 자연수 M의 분해합이 N인 경우, M을 N의 생성자라 한다.
+// 245 + 2 + 4 + 5 = 256
+// 이 때, 245(M)는 256(N)의 생성자가 된다.
+
+// 자연수 M이 주어졌을때, M의 가장 작은 생성자 구하기. // (N->M)
+
 const number = parseInt(input);
 let result = 1;
 let answer_flag = 0; // 생성자가 없는 경우를 구분하기 위한 flag값 0으로 설정.
