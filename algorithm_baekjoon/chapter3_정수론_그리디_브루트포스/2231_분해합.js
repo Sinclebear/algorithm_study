@@ -28,7 +28,7 @@ function DigitGenerator() {
 
     const stringValue = i.toString(); // 자릿수 덧셈을 위해 문자열로 변경
 
-    //String이 배열과 유사한점을 사용하여, String.length, String[j] 를 활용해 각 자릿수를 더한다.
+    // String이 배열과 유사한점을 사용하여, String.length, String[j] 를 활용해 각 자릿수를 더한다.
     for (let j = 0; j < stringValue.length; j++) {
       result += parseInt(stringValue[j]);
     }
@@ -43,4 +43,5 @@ function DigitGenerator() {
 }
 
 DigitGenerator();
+// 생성자가 없는 경우 0을 출력
 if (answer_flag === 0) console.log(0);
